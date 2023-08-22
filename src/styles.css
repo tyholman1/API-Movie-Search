@@ -2,3 +2,18 @@
   font-family: sans-serif;
   text-align: center;
 }
+
+body{
+  background-color: lightgray;
+}
+
+.nav{
+  display: flex;
+  justify-content: center;
+  margin: 50px;
+  padding-left: 10px;
+}
+
+h1{
+  color: #2f4f4f;
+}

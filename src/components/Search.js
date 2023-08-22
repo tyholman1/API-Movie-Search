@@ -10,19 +10,6 @@ function Search(props) {
     //use the event object to detect key and value to update
     setData({ ...data, [event.target.name]: event.target.value });
   };
-  // explaination of line 11 ( [event.target.name] )
-  // const foo = 'bar';
-
-  // const obj = {
-  //   [foo]: 'blahblah',
-  // };
-
-  // console.log(obj); prints obj below
-  /*
-    {
-      bar: "blahblah"
-    }
-  */
 
   const handleSubmit = (evt) => {
     //prevent page from refreshing on form submission

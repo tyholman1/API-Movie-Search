@@ -1,44 +1,49 @@
-import axios from "axios";
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useState } from "react";
 
-export default function Search() {
-  const apiKey = process.env.REACT_APP_API_KEY;
-  const params = useParams();
-  const searchvalue = params.searchvalue;
+function Search(props) {
+  const [data, setData] = useState({
+    searchTerm: ""
+  });
 
-  const [searchMovies, setSearchMovies] = useState([]);
+  //handleChange - updates formData when we type into form
+  const handleChange = (event) => {
+    //use the event object to detect key and value to update
+    setData({ ...data, [event.target.name]: event.target.value });
+  };
+  // explaination of line 11 ( [event.target.name] )
+  // const foo = 'bar';
 
-  const getMovie = async () => {
-    try {
-      const url = `https://api.watchmode.com/v1/autocomplete-search/?${apiKey}&${searchvalue}`;
-      const response = await axios.get(url);
-      setSearchMovies(response.data[0]);
-      console.log(response.data);
-      return response.data;
-    } catch (error) {
-      console.error(error);
+  // const obj = {
+  //   [foo]: 'blahblah',
+  // };
+
+  // console.log(obj); prints obj below
+  /*
+    {
+      bar: "blahblah"
     }
+  */
+
+  const handleSubmit = (evt) => {
+    //prevent page from refreshing on form submission
+    evt.preventDefault();
+    //pass the search term to moviesearch prop, which is apps getMovie function
+    props.movieSearch(data.searchTerm);
   };
 
-  useEffect(() => {
-    getMovie();
-  }, []);
-
-  const loaded = () => {
-    return (
-      <div>
-        <h1 className="movie-search">
-          {searchMovies.image_url}
-          <h2>{searchMovies.name}</h2>
-        </h1>
-      </div>
-    );
-  };
-
-  const loading = () => {
-    return <h1>Loading....</h1>;
-  };
-
-  return searchMovies && searchMovies.name ? loaded() : loading();
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          onChange={handleChange}
+          value={data.searchTerm}
+          name="searchTerm"
+        />
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+  );
 }
+
+export default Search;

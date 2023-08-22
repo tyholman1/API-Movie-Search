@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Movies from "./pages/Movies";
 import Search from "./components/Search";
+import Nav from "./components/Nav"
 import axios from "axios";
 
 export default function App() {
@@ -19,7 +20,7 @@ export default function App() {
       method: "GET",
       url: "https://streaming-availability.p.rapidapi.com/search/title",
       params: {
-        title: "batman",
+        title: "<REQUIRED>",
         country: "us",
         show_type: "all",
         output_language: "en"
@@ -39,7 +40,7 @@ export default function App() {
   };
   useEffect(() => {
     const moviesArr = [
-      "Clueless",
+      "Batman",
       "Shrek",
       "Mars Attacks",
       "Predator",
@@ -51,6 +52,8 @@ export default function App() {
 
   return (
     <div className="App">
+      <h1>Welcome to Where to Watch</h1>
+      <Nav />
       <Search movieSearch={getMovies} />
       {error ? <h1>{error}</h1> : ""}
       <Movies movie={movie} />
